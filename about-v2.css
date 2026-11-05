@@ -1,0 +1,86 @@
+.fan-copy-status:empty{display:none}
+.fan-posts{margin-top:24px}
+.fan-account-shot img{object-fit:contain;object-position:center;aspect-ratio:auto}
+.craft .section-intro.compact{margin-bottom:27px}
+.craft .section-intro.compact h2{margin:0;color:var(--bone)}
+
+.about .section-intro{margin-bottom:27px}
+.about-layout{grid-template-columns:minmax(0,1.55fr) minmax(280px,.55fr);gap:clamp(42px,5.2vw,86px);align-items:start;padding:0 0 104px}
+.about-copy h2{font-size:clamp(43px,4.25vw,67px);line-height:1.2;margin:0 0 36px}
+.about-journey{position:relative;padding:26px 28px 25px;border-radius:26px;background:linear-gradient(125deg,rgba(23,48,59,.84),rgba(13,29,39,.64) 70%,rgba(39,54,56,.67));box-shadow:0 24px 55px #0003,inset 0 1px #dce8e319}
+.about-origin-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.about-origin{position:relative;min-height:145px;padding:15px 16px 13px;border-radius:17px;background:#e0ebe90b;box-shadow:inset 0 0 0 1px #dce8e31a}
+.about-origin:before{content:"";position:absolute;left:16px;top:0;width:30px;height:2px;background:var(--copper);border-radius:5px}
+.about-origin small{display:block;color:var(--copper);font-size:9px;font-weight:800;letter-spacing:.14em;line-height:1.5}
+.about-origin strong{display:block;margin:13px 0 6px;font:400 24px/1.2 var(--serif)}
+.about-copy .about-origin p{margin:0;color:#b7cac9;font-size:12px;line-height:1.55}
+.about-join{display:flex;align-items:center;gap:14px;max-width:380px;margin:10px auto;color:var(--copper)}
+.about-join span{height:1px;flex:1;background:linear-gradient(90deg,transparent,#dba57465)}
+.about-join span:last-child{transform:scaleX(-1)}
+.about-join i{font:normal 17px/1 var(--sans)}
+.about-core{display:flex;align-items:center;justify-content:center;gap:18px;min-height:74px;padding:14px 20px;border-radius:17px;background:linear-gradient(110deg,#dba57424,#c4936b0e 58%,#dba57420);box-shadow:inset 0 0 0 1px #dba57452}
+.about-core small{color:#dfb38d;font-size:10px;font-weight:800;letter-spacing:.15em;white-space:nowrap}
+.about-core strong{font:400 clamp(21px,2vw,28px)/1.2 var(--serif);white-space:nowrap}
+.about-core i{font-style:normal;color:var(--copper);font-size:.7em;margin:0 3px}
+.about-process{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:20px 0 0;padding:0;list-style:none}
+.about-process li{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:65px;border-radius:13px;background:#d8e6e60b;color:#e4ece9;text-align:center}
+.about-process li:not(:last-child):after{content:"";position:absolute;z-index:1;left:calc(100% - 2px);top:50%;width:11px;height:1px;background:#dba5749c}
+.about-process li span{font-size:9px;color:var(--copper);font-weight:800;letter-spacing:.11em}
+.about-process li b{font-size:12px;font-weight:600;white-space:nowrap}
+.about-copy p.about-thesis{max-width:760px;margin:21px 0 0;padding-left:18px;border-left:2px solid #dba5748a;color:#b9cbca;font-size:13px;line-height:1.75}
+.contact{padding:48px 0 0}
+.contact-kicker{display:block;color:var(--copper);font-size:10px;letter-spacing:.17em;font-weight:800}
+.contact>span{margin-top:14px;font-size:clamp(42px,3.4vw,53px)}
+.contact h3{margin:8px 0 28px;font-size:clamp(23px,2vw,29px)}
+.contact>a.contact-mail{display:grid;grid-template-columns:1fr auto;align-items:center;gap:3px 12px;width:100%;min-width:0;margin:0;padding:14px 16px;border-radius:17px;background:#d9e7e710;box-shadow:inset 0 0 0 1px #d9e7e724;transition:background .25s,transform .25s}
+.contact-mail:hover{background:#dba5741d;transform:translateY(-2px)}
+.contact-mail span{grid-column:1;color:var(--copper);font-size:10px;font-weight:800;letter-spacing:.12em}
+.contact-mail b{grid-column:1;font-size:14px;font-weight:500;overflow-wrap:anywhere}
+.contact-mail i{grid-column:2;grid-row:1/3;font-size:21px;font-style:normal;color:var(--copper)}
+.contact .qr{align-items:center;gap:16px;margin-top:20px;padding:14px;border-radius:17px;background:#d9e7e70b}
+.contact .qr img{width:124px;height:124px;flex:none;border-radius:12px;padding:5px}
+.contact .qr p{font-size:13px;line-height:1.6}
+
+@media(max-width:1000px){
+  .about-layout{grid-template-columns:minmax(0,1fr) minmax(240px,.55fr);gap:30px}
+  .about-journey{padding:20px}
+  .about-origin{padding:13px;min-height:140px}
+  .about-origin strong{font-size:20px}
+  .about-core{gap:10px}
+}
+@media(max-width:780px){
+  .about-layout{display:block;padding-bottom:78px}
+  .about-copy h2{font-size:clamp(37px,6vw,53px)}
+  .contact{display:grid;grid-template-columns:minmax(0,1fr) minmax(190px,.7fr);gap:0 22px;align-items:start;margin-top:36px;padding:28px 0 0;border-top:1px solid var(--line)}
+  .contact-kicker,.contact>span,.contact h3,.contact-mail{grid-column:1}
+  .contact .qr{grid-column:2;grid-row:1/5;margin:0}
+}
+@media(max-width:560px){
+  .fan-posts{margin-top:15px}
+  .fan-account-shot img{height:auto;flex:none;aspect-ratio:1185/773;object-fit:contain}
+  .craft .section-intro.compact h2{font-size:41px}
+  .about .section-intro{margin-bottom:19px}
+  .about-copy h2{font-size:clamp(34px,9vw,43px);margin-bottom:23px}
+  .about-journey{padding:15px;border-radius:20px}
+  .about-origin-row{grid-template-columns:1fr;gap:7px}
+  .about-origin{display:grid;grid-template-columns:95px 1fr;align-items:center;gap:1px 10px;min-height:0;padding:12px 14px;border-radius:12px}
+  .about-origin:before{left:0;top:13px;width:2px;height:calc(100% - 26px)}
+  .about-origin small{grid-column:1/-1;font-size:8px}
+  .about-origin strong{grid-column:1;font-size:18px;margin:3px 0 0}
+  .about-copy .about-origin p{grid-column:2;margin:0;font-size:11px}
+  .about-join{margin:7px auto}
+  .about-core{display:block;min-height:0;padding:14px 8px;text-align:center}
+  .about-core small{display:block;margin-bottom:5px;font-size:9px}
+  .about-core strong{font-size:21px}
+  .about-process{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:12px}
+  .about-process li{min-height:48px;flex-direction:row;gap:7px;border-radius:10px}
+  .about-process li:after{display:none}
+  .about-process li:last-child{grid-column:1/-1}
+  .about-process li b{font-size:11px}
+  .about-copy p.about-thesis{margin-top:16px;padding-left:12px;font-size:12px}
+  .contact{display:block;margin-top:30px;padding-top:25px}
+  .contact>span{font-size:39px;margin-top:7px}
+  .contact h3{font-size:23px;margin:4px 0 18px}
+  .contact .qr{margin-top:11px}
+}
+@media(prefers-reduced-motion:reduce){.contact>a.contact-mail{transition:none}}
