@@ -27,7 +27,7 @@
       player.volume = 1;
       player.src = videoCard.dataset.localVideo;
       title.textContent = videoCard.dataset.localTitle;
-      hint.textContent = '点击画面可暂停或继续。';
+      hint.textContent = '';
       dialog.showModal();
       document.body.classList.add('dialog-open');
       player.play().catch(() => {});

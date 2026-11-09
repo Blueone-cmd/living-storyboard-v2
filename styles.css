@@ -138,3 +138,20 @@
 .project-watch-note{margin:10px 1px 0;color:#b5c5c5;font-size:10px;line-height:1.5;letter-spacing:.01em}
 @media(max-width:780px){.project-watch-group{grid-column:1/-1;width:min(100%,360px);margin-top:3px}.project-rail{justify-content:initial}}
 @media(max-width:560px){.project-watch-group{width:100%}.project-watch-group .project-watch{min-height:50px;font-size:14px}.project-watch-note{font-size:10px;margin-top:8px}}
+
+/* Two deliberate playback actions replace the browser's download, speed and PiP menu. */
+.video-control-bar{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:9px;margin-top:13px}
+.video-control{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-width:112px;min-height:44px;padding:8px 16px;border:1px solid #c9d7d163;border-radius:999px;background:#172c35;color:#f4f0e8;font:700 12px/1.2 var(--sans);letter-spacing:.05em}
+.video-control:hover{border-color:#e5b58a;background:#29404b;color:#fff}
+.video-control:disabled{opacity:.45;cursor:not-allowed}
+.video-control-icon{display:inline-grid;place-items:center;min-width:19px;color:var(--copper);font:700 14px/1 var(--sans);white-space:nowrap}
+.video-control-icon svg{display:block;width:18px;height:18px}
+.video-control-label{white-space:nowrap}
+.video-control-bar--hero{position:absolute;z-index:9;top:clamp(87px,11vh,116px);right:clamp(20px,3.5vw,58px);margin:0;justify-content:flex-end}
+.video-control-bar--hero .video-control{min-width:0;min-height:40px;padding:8px 13px;background:#07141cb8;border-color:#e7ede680;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 6px 20px #0004}
+.video-control-bar--hero .video-control:hover{background:#223943df}
+.media-dialog video{max-height:calc(100dvh - 225px);cursor:pointer}
+.media-dialog #media-hint:empty{display:none}
+.media-dialog #media-hint{margin-top:12px}
+@media(max-width:560px){.video-control-bar--hero{top:72px;right:14px;gap:6px}.video-control-bar--hero .video-control{min-height:38px;padding:7px 10px;font-size:10px}.video-control{min-height:44px}.media-dialog video{max-height:calc(100dvh - 210px)}}
+@media(prefers-reduced-motion:reduce){.video-control{transition:none}}

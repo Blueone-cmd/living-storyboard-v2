@@ -35,7 +35,7 @@
     <div class="stills-wall" aria-hidden="true"><div class="stills-field"><div class="stills-row row-a" id="stills-a"></div><div class="stills-row row-b" id="stills-b"></div></div></div>
     <section class="hero" id="hero" aria-label="作品集首屏">
       <div class="hero-motion" aria-hidden="true">
-        <video id="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/hero-fusion-v2-fullframe-poster.webp"><source media="(max-width: 700px)" src="assets/hero-fusion-v2-mobile-portrait.mp4" type="video/mp4"><source src="assets/hero-fusion-v2-fullframe.mp4" type="video/mp4"></video>
+        <video id="hero-video" autoplay muted loop playsinline preload="metadata" controlslist="nodownload noplaybackrate nofullscreen noremoteplayback" disablepictureinpicture disableremoteplayback poster="assets/hero-fusion-v2-fullframe-poster.webp"><source media="(max-width: 700px)" src="assets/hero-fusion-v2-mobile-portrait.mp4" type="video/mp4"><source src="assets/hero-fusion-v2-fullframe.mp4" type="video/mp4"></video>
       </div>
       <div class="hero-wash" aria-hidden="true"></div>
       <div class="hero-content shell">
@@ -155,7 +155,7 @@
     </section>
   </main>
 
-  <dialog class="media-dialog" id="media-dialog" aria-label="视频播放"><div class="dialog-shell"><div class="dialog-head"><div><small id="media-kind">SELECTED FILM</small><h2 id="media-title"></h2></div><button class="dialog-close interactive" type="button" data-close-dialog aria-label="关闭视频">✕</button></div><video id="media-player" controls playsinline preload="none"></video><p id="media-hint"></p></div></dialog>
+  <dialog class="media-dialog" id="media-dialog" aria-label="视频播放"><div class="dialog-shell"><div class="dialog-head"><div><small id="media-kind">SELECTED FILM</small><h2 id="media-title"></h2></div><button class="dialog-close interactive" type="button" data-close-dialog aria-label="关闭视频">✕</button></div><video id="media-player" playsinline preload="none" controlslist="nodownload noplaybackrate nofullscreen noremoteplayback" disablepictureinpicture disableremoteplayback></video><p id="media-hint" role="status"></p></div></dialog>
   <dialog class="image-dialog" id="image-dialog" aria-label="查看原图"><div class="image-dialog-head"><span>PROJECT RECORD</span><button class="dialog-close interactive" type="button" data-close-dialog aria-label="关闭图片">✕</button></div><img id="expanded-image" alt="项目过程截图原图"></dialog>
 </body>
 </html>

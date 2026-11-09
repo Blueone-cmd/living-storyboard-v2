@@ -13,6 +13,72 @@
       : remoteMediaURL(path);
   };
 
+  // Keep the playback UI identical on the hero, film dialog, and prompt clips.
+  const attachVideoControls = (video, mount, { hero = false, onUserPlay } = {}) => {
+    video.controls = false;
+    video.setAttribute('controlslist', 'nodownload noplaybackrate nofullscreen noremoteplayback');
+    video.disablePictureInPicture = true;
+    video.disableRemotePlayback = true;
+    video.addEventListener('contextmenu', event => event.preventDefault());
+
+    const bar = document.createElement('div');
+    bar.className = `video-control-bar${hero ? ' video-control-bar--hero' : ''}`;
+    bar.setAttribute('role', 'group');
+    bar.setAttribute('aria-label', hero ? '首页背景视频控制' : '视频控制');
+    const makeButton = (className) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = `video-control interactive ${className}`;
+      const icon = document.createElement('span');
+      icon.className = 'video-control-icon';
+      icon.setAttribute('aria-hidden', 'true');
+      const label = document.createElement('span');
+      label.className = 'video-control-label';
+      button.append(icon, label);
+      bar.append(button);
+      return { button, icon, label };
+    };
+    const play = makeButton('video-control--play');
+    const sound = makeButton('video-control--sound');
+
+    const sync = () => {
+      const paused = video.paused || video.ended;
+      play.icon.innerHTML = paused
+        ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>'
+        : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zm7 0h3v14h-3z" fill="currentColor"/></svg>';
+      play.label.textContent = paused ? '播放' : '暂停';
+      play.button.setAttribute('aria-label', hero ? (paused ? '播放首页背景视频' : '暂停首页背景视频') : (paused ? '播放视频' : '暂停视频'));
+      play.button.setAttribute('aria-pressed', String(!paused));
+      const silent = video.muted || video.volume === 0;
+      sound.icon.innerHTML = silent
+        ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m16 9 5 6m0-6-5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+        : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M15 9a5 5 0 0 1 0 6m3-9a9 9 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+      sound.label.textContent = silent ? '开启声音' : '静音';
+      sound.button.setAttribute('aria-label', silent ? '取消静音' : '静音');
+      sound.button.setAttribute('aria-pressed', String(silent));
+    };
+    const togglePlay = () => {
+      if (video.paused || video.ended) {
+        onUserPlay?.(true);
+        video.play().catch(() => {});
+      } else {
+        onUserPlay?.(false);
+        video.pause();
+      }
+    };
+    play.button.addEventListener('click', togglePlay);
+    sound.button.addEventListener('click', () => { video.muted = !video.muted; });
+    if (!hero) video.addEventListener('click', togglePlay);
+    ['play', 'pause', 'ended', 'volumechange', 'emptied'].forEach(type => video.addEventListener(type, sync));
+    if (video.parentElement === mount && video.nextSibling) mount.insertBefore(bar, video.nextSibling);
+    else mount.append(bar);
+    sync();
+    return { setEnabled: enabled => {
+      play.button.disabled = !enabled;
+      sound.button.disabled = !enabled;
+    } };
+  };
+
   const otherIds = ['film-17', 'film-15', 'film-14', 'film-11', 'film-12'];
   const otherGrid = document.getElementById('other-grid');
   otherIds.forEach((id, index) => {
@@ -68,13 +134,14 @@
   const promptMedia = document.createElement('div');
   promptMedia.className = 'prompt-dialog-media';
   const promptPlayer = document.createElement('video');
-  promptPlayer.controls = true;
   promptPlayer.playsInline = true;
   promptPlayer.preload = 'none';
   const promptStatus = document.createElement('p');
   promptStatus.className = 'prompt-dialog-status';
   promptStatus.setAttribute('aria-live', 'polite');
-  promptMedia.append(promptPlayer, promptStatus);
+  promptMedia.append(promptPlayer);
+  const promptControls = attachVideoControls(promptPlayer, promptMedia);
+  promptMedia.append(promptStatus);
   const promptCopy = document.createElement('section');
   promptCopy.className = 'prompt-dialog-copy';
   const promptCopyLabel = document.createElement('span');
@@ -100,7 +167,8 @@
     promptPlayer.classList.remove('is-landscape');
     promptPlayer.muted = false;
     promptPlayer.volume = 1;
-    promptStatus.textContent = work.video ? '镜头预览 · 可暂停、继续播放' : '视频素材待补';
+    promptControls.setEnabled(Boolean(work.video));
+    promptStatus.textContent = work.video ? '' : '视频素材待补';
     promptDialog.showModal();
     document.body.classList.add('dialog-open');
     promptClose.focus({ preventScroll: true });
@@ -185,6 +253,7 @@
 
   const mediaDialog = document.getElementById('media-dialog');
   const mediaPlayer = document.getElementById('media-player');
+  attachVideoControls(mediaPlayer, mediaPlayer.parentElement);
   const mediaTitle = document.getElementById('media-title');
   const mediaHint = document.getElementById('media-hint');
   const imageDialog = document.getElementById('image-dialog');
@@ -207,7 +276,7 @@
       const work = byId.get(workButton.dataset.workId);
       if (!work?.video) return;
       mediaTitle.textContent = work.title;
-      mediaHint.textContent = '点击画面可暂停或继续；视频将按需加载。';
+      mediaHint.textContent = '';
       mediaPlayer.poster = `assets/${work.poster}`;
       mediaPlayer.dataset.sourcePath = work.video;
       mediaPlayer.dataset.remoteFallback = '0';
@@ -250,9 +319,15 @@
   });
 
   const heroVideo = document.getElementById('hero-video');
+  let heroWantsPlayback = true;
+  attachVideoControls(heroVideo, heroVideo.closest('.hero'), {
+    hero: true,
+    onUserPlay: wantsPlayback => { heroWantsPlayback = wantsPlayback; }
+  });
   if (window.matchMedia('(max-width: 700px)').matches) heroVideo.poster = 'assets/hero-fusion-v2-mobile-portrait-poster.webp';
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   if (connection?.saveData || /^(slow-2g|2g)$/.test(connection?.effectiveType || '')) {
+    heroWantsPlayback = false;
     heroVideo.pause();
     heroVideo.removeAttribute('autoplay');
   } else {
@@ -260,7 +335,7 @@
   }
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) heroVideo.pause();
-    else if (!connection?.saveData) heroVideo.play().catch(() => {});
+    else if (heroWantsPlayback) heroVideo.play().catch(() => {});
   });
 
   const motionReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
