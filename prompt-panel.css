@@ -243,6 +243,4 @@
   .js-motion .prompt-grid > .prompt-card.is-visible:hover { transform: none; }
 }
 
-.prompt-dialog-media video { cursor: pointer; }
-.prompt-dialog-media .video-control-bar { flex: none; }
 .prompt-dialog-media .prompt-dialog-status:empty { display: none; }
